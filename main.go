@@ -42,6 +42,7 @@ func display(conn *net.UDPConn) {
 		fmt.Println("Error Reading")
 		return
 	} else {
+		fmt.Print(n, "  ")
 		fmt.Println(hex.EncodeToString(buffer[0:n]))
 		fmt.Println(buffer[0:n])
 		fmt.Println("Package Done")
