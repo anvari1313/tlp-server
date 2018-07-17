@@ -1,51 +1,43 @@
 package main
 
 import (
-	"encoding/hex"
+	"github.com/anvari1313/tlp-server/rudp"
 	"fmt"
-	"net"
 )
 
+
+
 func main() {
-	fmt.Println("Hello World!")
+	t := []byte{1, 2, 29, 22}
+	//me := rudp.Message{1256, true, true, false,5612, 5, t}
+	//fmt.Println(me)
+	//serailized := rudp.SerializeMessage(me)
+	//newMessage := rudp.ParseDatagramMessage(serailized)
+	//fmt.Println(newMessage)
 
-	//Basic variables
-	port := ":8080"
-	protocol := "udp"
-
-	//Build the address
-	udpAddr, err := net.ResolveUDPAddr(protocol, port)
-	if err != nil {
-		fmt.Println("Wrong Address")
-		return
+	m := map[uint64][]rudp.Message{}
+	if m[12] == nil {
+		fmt.Println("Hash is null")
+		buffer := make([]rudp.Message, 0)
+		m[12] = buffer
+		s := m[12]
+		message := rudp.Message{
+			1256,
+			true,
+			true,
+			false,
+			5612,
+			5,
+			t}
+		a := append(s, message)
+		m[12] = a
 	}
 
-	//Create the connection
-	udpConn, err := net.ListenUDP(protocol, udpAddr)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	//Keep calling this function
-	for {
-		display(udpConn)
-	}
-
-}
-
-func display(conn *net.UDPConn) {
-
-	buffer := make([]byte, 1024)
-	n, addr, err := conn.ReadFromUDP(buffer)
-	fmt.Println(addr)
-	if err != nil {
-		fmt.Println("Error Reading")
-		return
+	if m[12] == nil {
+		fmt.Println("This is also null")
 	} else {
-		fmt.Print(n, "  ")
-		fmt.Println(hex.EncodeToString(buffer[0:n]))
-		fmt.Println(buffer[0:n])
-		fmt.Println("Package Done")
+		fmt.Println(m[12])
 	}
-
+	port := ":8080"
+	rudp.StartRUDPServer(port)
 }
