@@ -1,9 +1,8 @@
 package rudp
 
 import (
-	binary "encoding/binary"
+	"encoding/binary"
 	"math"
-	"fmt"
 )
 
 type Message struct {
@@ -87,9 +86,6 @@ func SerializeMessage(message Message) []byte {
 	for i := 0; i < len(message.Data); i++ {
 		datagram[21 + i] = message.Data[i]
 	}
-
-	fmt.Print("Datagram : ")
-	fmt.Println(datagram)
 
 	return datagram
 }
